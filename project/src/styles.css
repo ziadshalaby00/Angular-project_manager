@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('../using-fontawesome/css/all.min.css');
+@import "tailwindcss";
+pre h1 {
+    font-size: 2em; /* الحجم الافتراضي تقريبًا 32px */
+    font-weight: bold;
+    /* margin: 0.67em 0; */
+}
+
+pre h2 {
+    font-size: 1.5em; /* الحجم الافتراضي تقريبًا 24px */
+    font-weight: bold;
+    /* margin: 0.75em 0; */
+}
+
+pre h3 {
+    font-size: 1.17em; /* الحجم الافتراضي تقريبًا 18.72px */
+    font-weight: bold;
+    /* margin: 0.83em 0; */
+}
+
+pre h4 {
+    font-size: 1em; /* الحجم الافتراضي 16px */
+    font-weight: bold;
+    /* margin: 1.12em 0; */
+}
+
+pre h5 {
+    font-size: 0.83em; /* الحجم الافتراضي تقريبًا 13.28px */
+    font-weight: bold;
+    /* margin: 1.5em 0; */
+}
+
+pre h6 {
+    font-size: 0.67em; /* الحجم الافتراضي تقريبًا 10.72px */
+    font-weight: bold;
+    /* margin: 1.67 */
+}
+
+@layer utilities {
+    /* تخصيص عرض الـ Scrollbar */
+    .scrollbar::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  
+    /* تخصيص الخلفية */
+    .scrollbar::-webkit-scrollbar-track {
+      background: #f3f4f6; /* Tailwind gray-200 */
+      border-radius: 4px;
+    }
+  
+    /* تخصيص شكل الـ Scrollbar */
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: #4b5563; /* Tailwind gray-700 */
+      border-radius: 4px;
+    }
+  
+    /* تغيير اللون عند التمرير */
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #1f2937; /* Tailwind gray-900 */
+    }
+
+    /* تخصيص عرض الـ Scrollbar */
+    .scrollbar-blue::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+  
+    /* تخصيص الخلفية */
+    .scrollbar-blue::-webkit-scrollbar-track {
+      background: #3b82f6; /* Tailwind blue-200 */
+      border-radius: 4px;
+    }
+
+    /* تخصيص شكل الـ Scrollbar */
+    .scrollbar-blue::-webkit-scrollbar-thumb {
+      background: #3b82f6; /* Tailwind blue-400 */
+      border-radius: 4px;
+    }
+
+    /* تغيير اللون عند التمرير */
+    .scrollbar-blue::-webkit-scrollbar-thumb:hover {
+      background: #3b82f6; /* Tailwind blue-500 */
+    }
+}
+  

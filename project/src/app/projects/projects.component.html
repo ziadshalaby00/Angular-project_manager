@@ -1,0 +1,212 @@
+<div class="container px-2 flex flex-col m-auto min-h-full py-8">
+ 
+  <!-- serach and filtering projects -->
+  <div class="relative ">
+    <input type="search" name="search" [(ngModel)]="searchValue"
+     id="search" placeholder="Search for a project by title..."
+      class="block w-full rounded-md bg-white px-3 rounded-r-md
+      py-2 text-base text-gray-900 outline-1 -outline-offset-1 
+      outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+      focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6">
+      
+      <span (click)="startSearch()"
+      class="absolute top-[50%] text-gray-50 rounded-r-md
+      translate-y-[-50%] right-0 bg-blue-600 flex items-center justify-center
+      hover:bg-blue-500 h-full hover:cursor-pointer w-1/10 min-w-12">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </span>
+  </div>
+
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-4 mt-3 ">
+
+    @for(item of filters; track item.count) {
+
+      <button [ngClass]="{
+          'bg-sky-500 text-gray-50': item.filter === activeFilter,
+          'text-sky-500 hover:bg-sky-200 hover:bg-opacity-10 hover:text-sky-600': item.filter !== activeFilter
+        }"
+        class="inline-block rounded border-2 border-sky-500 
+        hover:cursor-pointer px-4 py-2 text-xs font-medium uppercase leading-normal"
+        (click)="filterData(item.filter)">{{item.filter}} Projects 
+
+        <span class="inline-block whitespace-nowrap rounded-sm
+        bg-blue-100 p-1.5 ml-1.5
+        text-center align-baseline text-sm font-bold 
+        leading-none text-blue-700">
+          {{item.count}}
+        </span>
+
+      </button>
+    }
+
+  </div>
+  <!-- serach and filtering projects -->
+
+
+  @for(item of $data; track item.id) {
+
+      <!-- Card -->
+      <div class="bg-blue-400 shadow-lg mt-5 rounded overflow-hidden border-2 border-blue-500">
+        
+          <!-- Card body -->
+          <div class="relative p-6 sm:max-h-52 max-h-58 overflow-hidden bg-slate-50">
+        
+            <!-- Title -->
+              <div class="flex justify-between items-center gap-2 flex-wrap mb-2 ">
+                  <h5 class="text-2xl font-bold tracking-wide text-neutral-900 dark:text-neutral-50">
+                    {{item.title}}
+                  </h5>
+                  
+                  <div class="flex items-center justify-center gap-3">
+                    @if(item.author.id === 1) {
+                      <div class="relative inline-block text-left">
+                        <div>
+                          <button type="button" (click)="togglePSetting(item.id)"
+                            class="flex items-center rounded-md bg-white px-3 py-2 text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:text-gray-600
+                            hover:cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                            <i class="fa-solid fa-gear text-xl"></i>
+                          </button>
+                        </div>
+
+                        <!--
+                          Dropdown menu, show/hide based on menu state.
+                      
+                          Entering: "transition ease-out duration-100"
+                            From: "transform opacity-0 scale-95"
+                            To: "transform opacity-100 scale-100"
+                          Leaving: "transition ease-in duration-75"
+                            From: "transform opacity-100 scale-100"
+                            To: "transform opacity-0 scale-95"
+                        -->
+                        <div [ngClass]="{'hidden': PSetting != item.id}"
+                          class="absolute sm:right-0 right-[-11.2.5rem] z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                          <div class="py-1" role="none">
+                            <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
+                            <a routerLink="/EditProject/{{item.id}}" class="block px-4 py-2 text-sm hover:bg-gray-100
+                             text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">
+                              Edit Project <i class="ml-1 fa-solid fa-pen-to-square"></i>
+                            </a>
+
+                            <button (click)="deleteProject(item.id)"
+                             class="block w-full text-left hover:cursor-pointer px-4 py-2 text-sm hover:bg-gray-100
+                             text-red-600" role="menuitem" tabindex="-1" id="menu-item-1">
+                             Delete Project <i class="ml-1 fa-solid fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    }
+  
+                  <span [ngClass]="{
+                      'text-emerald-700 ring-1 border border-emerald-200 ring-emerald-600/20 bg-emerald-50': item.status === 'Done',
+                      'text-yellow-800 ring-1 ring-yellow-600/20 bg-yellow-50': item.status !== 'Done'
+                    }"
+                    class="inline-flex items-center rounded-md px-2.5 py-1.5 text-base font-medium ring-inset">{{item.status}}</span>
+                  </div>
+
+              </div>
+        
+            <!-- Text -->
+            <pre [innerHTML]="getHtmlContent(item.description)"
+            class="mb-2 text-neutral-700 origin-top-left scale-75 dark:text-neutral-300"></pre>
+        
+            <!-- view project -->
+            <div class="h-3/8 flex justify-center items-center
+              bg-gradient-to-t from-gray-300 to-transparent
+              absolute bottom-0 left-0 w-full">
+  
+              <a routerLink="/ProjectInfo/{{item.id}}" 
+              class="text-white font-medium px-4 hover:bg-gray-500
+              py-1 rounded-xl bg-gray-600">View Project</a>
+  
+            </div>
+
+          </div>
+        
+          <!-- Card footer -->
+          <div class=" text-gray-100 px-6 py-4">
+            <h5 class="flex items-center gap-2 flex-wrap justify-between">
+  
+              <div class="flex gap-2 justify-center items-center">
+                  <img class="size-10 text-md rounded-full" src="{{item.author.img}}" alt="">
+                  <p class="">{{item.author.username}}</p>
+              </div>
+  
+              <div class=" text-xs">
+                  {{item.created_at | date}}
+              </div>
+  
+            </h5>
+          </div>
+        
+      </div>
+      <!-- Card -->
+  }@empty {
+    <!-- empty -->
+    <div class="flex-1 flex items-center">
+      <div class="text-center mx-auto px-4 lg:px-8 max-w-2xl py-14 sm:py-48 lg:py-28">
+    
+        <h1 class="text-3xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">
+          No projects
+        </h1>
+    
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a routerLink="/CreateProject"
+            class="rounded-md bg-teal-500 px-3.5 text-neutral-50
+            py-2.5 text-sm font-semiboldshadow-xs hover:bg-teal-600
+            focus-visible:outline-2 hover:cursor-pointer
+            focus-visible:outline-offset-2  border border-teal-600
+            flex items-center justify-center gap-2
+          focus-visible:outline-teal-600">
+            Create Project <i class="fa-solid fa-square-plus"></i> 
+          </a>
+        </div>
+    
+      </div>
+    </div>
+    <!-- empty -->
+  }
+
+  <!-- pagination -->
+  <div class="flex  gap-2 items-center justify-between border-t mt-8 border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div>
+        <p class="text-sm text-gray-700">
+          Showing
+          <span class="font-medium">1</span>
+          to
+          <span class="font-medium">{{$data.length / 5}}</span>
+          of
+          <span class="font-medium">{{$data.length}}</span>
+          results
+        </p>
+      </div>
+      
+      <div>
+        <nav class="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination">
+
+          <button class="hover:cursor-pointer relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+            <span class="sr-only">Previous</span>
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
+    
+          <button class="hover:cursor-pointer relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">2</button>
+          <button class="hover:cursor-pointer relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">3</button>
+          <button class="hover:cursor-pointer relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">4</button>
+          
+          <button class="hover:cursor-pointer relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+            <span class="sr-only">Next</span>
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+              <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+        </nav>
+      </div>
+  </div>
+  <!-- pagination -->
+
+</div>

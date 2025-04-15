@@ -1,0 +1,99 @@
+@if(item.author.id === 1) {
+  <!-- add memebr -->
+  <div class="mb-12">
+    <div class="flex justify-end mb-4">
+      <button (click)="openim()"
+        class="text-indigo-600 hover:cursor-pointer hover:text-indigo-500 text-3xl">
+        @if(inviteMember) {
+          Close <i class="ml-1 fa-solid fa-circle-xmark"></i>
+        }@else {
+          Invite Member <i class="ml-1 fa-solid fa-user-plus"></i>
+        }
+      </button>
+    </div>
+    
+    <div [class.hidden]="!inviteMember" class="mb-4 w-full">
+      <div class="relative ">
+        <input type="search" name="search" [(ngModel)]="memberSearch"
+         id="search" placeholder="Search for a user by username..."
+          class="block w-full rounded-md bg-white px-3 rounded-r-md
+          py-2 text-base text-gray-900 outline-1 -outline-offset-1 
+          outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+          focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6">
+          
+          <span (click)="addMember()"
+          class="absolute top-[50%] text-gray-50 rounded-r-md
+          translate-y-[-50%] right-0 bg-blue-600 flex items-center justify-center
+          hover:bg-blue-500 h-full hover:cursor-pointer w-1/10 min-w-12">
+    
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+      </div>
+
+      @if(resultAddMember) {
+        <li class="flex justify-center mt-6 items-center gap-2">
+              
+          <div class="flex items-center gap-x-4">
+            <img class="size-12 flex-none rounded-full" src="{{resultAddMember.img}}" alt="">
+            <p class="text-sm/6 min-w-48 font-semibold text-gray-900">{{resultAddMember.username}}</p>
+          </div>
+    
+          @if(!resultAddMember.invited) {
+            <button type="submit" 
+                  class="block rounded-md w-26 bg-teal-500 px-3.5 py-2.5 
+                  text-center text-sm font-semibold text-white shadow-xs
+                  hover:bg-teal-600 focus-visible:outline hover:cursor-pointer
+                  -2 focus-visible:outline-offset-2 focus-visible:outline-teal-600">
+                  Invite
+            </button>
+          }@else {
+            <span class="text-teal-500 text-xl">invited</span>
+          }
+    
+        </li>
+      }@else {
+        <li class="flex justify-center mt-6 items-center">
+          <span class="text-gray-800">There is no user with this username.</span>
+        </li>
+      }
+
+    </div>
+  
+  </div>
+  <!-- add member -->
+}
+
+<ul role="list" class="divide-y px-4 min-w-72 divide-cyan-400">
+    
+    @for(it of item.members; track it.id) {
+        <li class="flex sm:flex-row flex-col sm:items-center gap-1
+         justify-between items-start gap-x-6 py-5">
+            
+          <div class="flex items-center min-w-0 gap-x-4">
+            <img class="size-12 flex-none rounded-full"
+            src="{{it.member.img}}" alt="">
+            <div class="min-w-0 flex-auto">
+              <p class="text-sm/6 font-semibold text-gray-900">{{it.member.username}}</p>
+              <p class="truncate text-xs/5 text-gray-500"></p>
+            </div>
+          </div>
+
+          <div class="shrink-0 flex justify-between w-full sm:w-auto gap-3 items-center">
+            <p class="mt-1 text-xs/5 text-gray-500">
+                Joined at <time datetime="2023-01-23T13:23Z">{{it.created_at}}</time>
+            </p>
+
+            @if(item.author.id === 1) {
+              <button (click)="deleteMember(it.id)"
+                class="text-md">
+                <i class="fa-solid fa-trash origin-center
+                hover:text-red-400 hover:cursor-pointer hover:scale-120
+                 text-red-600"></i>
+              </button>
+            }
+          </div>
+
+        </li>
+    }
+
+</ul>

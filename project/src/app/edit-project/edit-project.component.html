@@ -1,0 +1,77 @@
+<div class="px-2 py-12">
+    <div class="mx-auto max-w-2xl text-center">
+        <a routerLink="/ProjectInfo/{{item.id}}" 
+        routerLinkActive="router-link-active"  
+        class="text-2xl font-medium tracking-tight text-balance
+        hover:text-blue-500 hover:border-blue-500
+        border-2 border-blue-400 px-8 py-3 rounded-md text-blue-400">
+            Project <i class="ml-1 fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <form class="mx-auto mt-8 max-w-[90%]">
+      <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+
+        <div>
+          <label for="Title" class="block text-sm/6 font-semibold text-gray-900">Project Title</label>
+          <div class="mt-2.5">
+            <input type="text" name="Title" id="Title" placeholder="Title..." value="{{item.title}}"
+            class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
+          </div>
+        </div>
+
+        <div class="flex gap-3 items-center mt-2.5  sm:mt-8.5">
+          <button (click)="doneProject(item.status)"
+              [ngClass]="{
+                'text-emerald-300' : item.status == 'Done',
+                'text-yellow-400' : item.status == 'Ongoing',
+              }"
+              class="hover:cursor-pointer flex items-center font-normal 
+              h-auto hover:scale-110 hover:opacity-75 text-4xl">
+      
+              <i [ngClass]="{
+                  'fa-square-check' : item.status == 'Done',
+                  'fa-square' : item.status == 'Ongoing',
+                }"
+                class="fa-regular scale-105"></i>
+      
+            </button>
+
+            <span [ngClass]="{
+                'text-emerald-700 ring-1 border-emerald-200 ring-emerald-600/20 bg-emerald-50': item.status === 'Done',
+                'text-yellow-800  ring-1 border-yellow-500 ring-yellow-600/20 bg-yellow-50': item.status === 'Ongoing'
+              }"
+              class="inline-flex items-center rounded-md px-2.5 py-1.5 text-base font-medium ring-inset">
+              {{item.status}}
+            </span>
+        </div>
+
+        <div class="sm:col-span-2 grid grid-cols-2 gap-2">
+          <label for="description" class="col-span-2 mb-3 text-left block text-sm/6 font-semibold text-gray-900">description</label>
+          <!-- <textarea name="description" -->
+           
+          <textarea name="description" [(ngModel)]="markdownContent"
+            id="description" rows="12" placeholder="Project description..."
+            class="block w-full rounded-md bg-white px-3.5 py-2 text-base
+          text-gray-900 outline-1 -outline-offset-1 outline-gray-300 col-span-2 sm:col-span-1
+          placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 
+            focus:outline-indigo-600"></textarea>
+
+            <div class="w-full col-span-2 sm:col-span-1 overflow-auto scrollbar
+            p-8 pr-2 border border-gray-300 rounded-md bg-gray-100">
+              <pre class="w-full" [innerHTML]="getHtmlContent()"></pre>
+            </div>
+          
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <button type="submit" 
+        class="block w-full rounded-md bg-gray-500 px-3.5 py-2.5 
+        text-center text-sm font-semibold text-white shadow-xs 
+        hover:bg-gray-600 focus-visible:outline hover:cursor-pointer
+        -2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Edit</button>
+      </div>
+    </form>
+</div>
+  

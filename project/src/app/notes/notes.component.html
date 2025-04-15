@@ -1,0 +1,146 @@
+<!-- add note -->
+<div class="mb-12">
+   <div class="flex justify-end mb-4">
+     <button (click)="openAddNote()"
+       class="text-indigo-600 hover:cursor-pointer hover:text-indigo-500 text-3xl">
+       @if(addNote) {
+         Close <i class="ml-1 fa-solid fa-circle-xmark"></i>
+       }@else {
+         Add Note <i class="ml-1 fa-solid fa-circle-plus"></i>
+       }
+     </button>
+   </div>
+   
+   <div [class.hidden]="!addNote" class="w-full">
+       <form class="mb-8 mt-2 rounded-lg shadow-lg text-left
+           bg-gray-100 border text-gray-800 px-2 pb-4 border-gray-300">
+           <div class="sm:col-span-2">
+               <label for="add-Note-Title" class="block text-sm/6 font-semibold text-gray-900">Title</label>
+               <div class="mt-2.5">
+                 <input type="text" name="add-Note-Title" id="add-Note-Title" autocomplete="organization" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
+               </div>
+           </div>
+           
+           <div class="sm:col-span-2 mt-3.5">
+               <label for="add-description" class="block text-sm/6 font-semibold text-gray-900">description</label>
+               <div class="mt-2.5">
+                 <textarea name="add-description" id="add-description" rows="4" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"></textarea>
+               </div>
+           </div>
+   
+           <div class="mt-7">
+               <button type="submit" 
+               class="block w-full rounded-md bg-teal-500 px-3.5 py-2.5 
+               text-center text-sm font-semibold text-white shadow-xs 
+               hover:bg-teal-600 focus-visible:outline hover:cursor-pointer
+               -2 focus-visible:outline-offset-2 focus-visible:outline-teal-600">Add Note</button>
+           </div>
+       </form>
+   </div>
+</div>
+<!-- add note -->
+
+@for(it of item.notes; track it.id) {
+
+  <!-- Card -->
+  <div class="mt-8 p-4 block rounded-lg shadow-lg text-left min-w-72
+    bg-gray-500 border text-gray-100 border-gray-800">
+  
+      <div class="mb-2 flex sm:flex-row flex-col sm:items-center gap-1
+          justify-between items-start gap-x-6">
+            
+          <div class="flex items-center min-w-0 gap-x-4">
+            <img class="size-10 flex-none rounded-full"
+            src="{{it.author.img}}" alt="">
+            <div class="min-w-0 flex-auto">
+              <p class="text-sm/6 font-semibold">{{it.author.username}}</p>
+            </div>
+          </div>
+
+          <p class="text-xs/5 text-gray-300">
+            <time datetime="2023-01-23T13:23Z">{{it.created_at}}</time>
+          </p>
+      </div>
+  
+      <!-- Card body -->
+      <div class="flex gap-3 justify-between items-center">
+    
+        <!-- Title -->
+        <h5 class="text-lgfont-bold tracking-wide">
+          <i class="fa-solid fa-note-sticky"></i>
+          {{it.title}}
+        </h5>
+  
+        <div class="flex items-center gap-4">
+          @if(it.author.id == 1) {
+              <button (click)="openEdit(it.id)"
+                  class="text-xl">
+                  <i class="fa-solid fa-pen-to-square origin-center
+                  hover:text-gray-700 hover:cursor-pointer hover:scale-120
+                    text-gray-200"></i>
+              </button>
+          }
+
+          @if(it.author.id == 1 || item.author.id == 1) {
+              <button (click)="deleteNote(it.id)"
+                  class="text-xl">
+                  <i class="fa-solid fa-trash origin-center
+                  hover:text-red-400 hover:cursor-pointer hover:scale-120
+                    text-red-600"></i>
+              </button>
+          }
+
+          <button [ngClass]="{
+                  'fa-square-caret-down': it.id != currentNote,
+                  'fa-square-caret-up': it.id == currentNote,
+              }"
+              (click)="openNote(it.id)"
+              class="hover:text-gray-700 origin-center hover:cursor-pointer text-2xl hover:scale-120">
+              <i class="fa-solid"></i>
+          </button>
+        </div>
+    
+      </div>
+    
+  </div>
+  <!-- Card -->
+
+  <!-- Card Edit -->
+  <form [class.hidden]="it.id != currentEdit"
+      class="mb-8 mt-2 rounded-lg shadow-lg text-left
+      bg-gray-100 border text-gray-800 px-2 pb-4 border-gray-300"
+      >
+      <div class="sm:col-span-2">
+          <label for="Note-Title" class="block text-sm/6 font-semibold text-gray-900">Title</label>
+          <div class="mt-2.5">
+            <input type="text" value="{{it.title}}" name="Note-Title" id="Note-Title" autocomplete="organization" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
+          </div>
+      </div>
+      
+      <div class="sm:col-span-2 mt-3.5">
+          <label for="description" class="block text-sm/6 font-semibold text-gray-900">description</label>
+          <div class="mt-2.5">
+            <textarea name="description" value="{{it.description}}" id="description" rows="4" class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"></textarea>
+          </div>
+      </div>
+
+      <div class="mt-7">
+          <button type="submit" 
+          class="block w-full rounded-md bg-gray-500 px-3.5 py-2.5 
+          text-center text-sm font-semibold text-white shadow-xs 
+          hover:bg-gray-600 focus-visible:outline hover:cursor-pointer
+          -2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Edit</button>
+      </div>
+  </form>
+  <!-- Card Edit -->
+
+  <!-- Card description -->
+  <div [class.hidden]="it.id != currentNote"
+      class="hidden mb-8 mt-2 rounded-lg shadow-lg text-left
+      bg-gray-100 border text-gray-800 px-2 border-gray-300">
+  
+      <!-- Card body -->
+      <pre class="p-4">{{it.description}}</pre>
+  </div>
+  <!-- Card description -->
+}

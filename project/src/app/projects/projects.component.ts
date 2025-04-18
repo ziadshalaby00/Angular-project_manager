@@ -38,7 +38,7 @@ export class ProjectsComponent {
       "count": 0,
     },
     {
-      "filter": 'Done',
+      "filter": 'Complete',
       "count": 10,
     }, 
     {

@@ -29,12 +29,12 @@ export class TasksComponent {
         this.item = this.data.filter((p: any) => p.id == this.project_id)[0];
     }
 
-    doneTask(task_id: number, status: boolean) {
+    CompleteTask(task_id: number, status: boolean) {
         let task: any = this.item.tasks.filter((t: any) => t.id === task_id)
         if(task) {
             task = task[0]
-            task.is_done = status
-            task.done_by = {
+            task.is_Complete = status
+            task.Complete_by = {
                 "id": 1,
                 "username": `ziad shalaby ${1}`,
                 "img": "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-sulimansallehi-1704488.jpg&fm=jpg",

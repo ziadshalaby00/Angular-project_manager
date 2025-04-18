@@ -21,24 +21,17 @@
         </div>
 
         <div class="flex gap-3 items-center mt-2.5  sm:mt-8.5">
-          <button (click)="doneProject(item.status)"
+            <button (click)="CompleteProject(item.status)"
               [ngClass]="{
-                'text-emerald-300' : item.status == 'Done',
-                'text-yellow-400' : item.status == 'Ongoing',
+                'text-emerald-300 fa-solid fa-circle-check' : item.status == 'Complete',
+                'text-yellow-400 fa-regular fa-circle' : item.status == 'Ongoing',
               }"
-              class="hover:cursor-pointer flex items-center font-normal 
+              class="hover:cursor-pointer flex items-center font-normal
               h-auto hover:scale-110 hover:opacity-75 text-4xl">
-      
-              <i [ngClass]="{
-                  'fa-square-check' : item.status == 'Done',
-                  'fa-square' : item.status == 'Ongoing',
-                }"
-                class="fa-regular scale-105"></i>
-      
             </button>
 
             <span [ngClass]="{
-                'text-emerald-700 ring-1 border-emerald-200 ring-emerald-600/20 bg-emerald-50': item.status === 'Done',
+                'text-emerald-700 ring-1 border-emerald-200 ring-emerald-600/20 bg-emerald-50': item.status === 'Complete',
                 'text-yellow-800  ring-1 border-yellow-500 ring-yellow-600/20 bg-yellow-50': item.status === 'Ongoing'
               }"
               class="inline-flex items-center rounded-md px-2.5 py-1.5 text-base font-medium ring-inset">

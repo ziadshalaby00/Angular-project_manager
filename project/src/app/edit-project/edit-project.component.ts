@@ -33,7 +33,7 @@ export class EditProjectComponent {
     this.markdownContent = this.item.description
   }
 
-  doneProject(status: string) {
-    this.item.status = status === "Done" ? "Ongoing" : "Done"
+  CompleteProject(status: string) {
+    this.item.status = status === "Complete" ? "Ongoing" : "Complete"
   }
 }

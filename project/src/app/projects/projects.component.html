@@ -99,8 +99,8 @@
                     }
   
                   <span [ngClass]="{
-                      'text-emerald-700 ring-1 border border-emerald-200 ring-emerald-600/20 bg-emerald-50': item.status === 'Done',
-                      'text-yellow-800 ring-1 ring-yellow-600/20 bg-yellow-50': item.status !== 'Done'
+                      'text-emerald-700 ring-1 border border-emerald-200 ring-emerald-600/20 bg-emerald-50': item.status === 'Complete',
+                      'text-yellow-800 ring-1 ring-yellow-600/20 bg-yellow-50': item.status !== 'Complete'
                     }"
                     class="inline-flex items-center rounded-md px-2.5 py-1.5 text-base font-medium ring-inset">{{item.status}}</span>
                   </div>

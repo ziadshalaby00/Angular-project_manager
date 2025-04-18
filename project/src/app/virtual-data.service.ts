@@ -94,13 +94,13 @@ task Sub Title 2 test
             "img": "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-sulimansallehi-1704488.jpg&fm=jpg",
           },
 
-          "is_done": k<4 ? true : false,
-          "done_by": k<4 ? {
+          "is_Complete": k<4 ? true : false,
+          "Complete_by": k<4 ? {
             "id": k,
             "username": `ziad shalaby ${k}`,
             "img": "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-sulimansallehi-1704488.jpg&fm=jpg",
           } : null,
-          "done_at": "3/12/2025",
+          "Complete_at": "3/12/2025",
 
           "project": i,
           "created_at": "4/15/2025",
@@ -119,7 +119,7 @@ task Sub Title 2 test
           "img": "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-sulimansallehi-1704488.jpg&fm=jpg"
         },
         "created_at": "3/30/2025",
-        "status": i%2 == 0 ? "Ongoing" : "Done",
+        "status": i%2 == 0 ? "Ongoing" : "Complete",
         "members": members,
         "notes": notes,
         "tasks": tasks

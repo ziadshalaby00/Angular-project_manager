@@ -48,8 +48,8 @@ export class ProjectInfoComponent {
     this.Side = !this.Side
   }
 
-  doneProject(status: string) {
-    this.item.status = status === "Done" ? "Ongoing" : "Done"
+  CompleteProject(status: string) {
+    this.item.status = status === "Complete" ? "Ongoing" : "Complete"
   }
 
   deleteProject(project_id: number) {
